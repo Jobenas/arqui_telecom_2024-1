@@ -2,17 +2,17 @@ from threading import Thread
 import time
 
 
-def count():
-    print("Uno")
+def count(idx: int):
+    print(f"[{idx}] Uno")
     time.sleep(1)
-    print("Dos")
+    print(f"[{idx}] Dos")
 
 
 def main():
     threads = list()
 
-    for _ in range(3):
-        t = Thread(target=count)
+    for i in range(3):
+        t = Thread(target=count, args=(i, ))
         t.start()
         threads.append(t)
 
