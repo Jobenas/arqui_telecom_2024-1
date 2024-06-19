@@ -1,7 +1,7 @@
 from multiprocessing import Process
 import time
 
-N = 500_000_000
+N = 100_000_000
 
 
 def count(n):
