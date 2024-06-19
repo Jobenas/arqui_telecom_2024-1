@@ -1,7 +1,7 @@
 import time
 from threading import Thread
 
-N = 50_000_000
+N = 500_000_000
 
 
 def count(n):
