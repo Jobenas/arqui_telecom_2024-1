@@ -1,10 +1,11 @@
-from multiprocessing import Process
+from itertools import repeat
+from multiprocessing import cpu_count, Pool
 import numpy as np
 import time
 
-
 M = 5000
 N = 5000
+
 
 def mult_vector(x: list[np.int32], y: list[np.int32]) -> np.int32:
     suma = 0
@@ -15,7 +16,6 @@ def mult_vector(x: list[np.int32], y: list[np.int32]) -> np.int32:
     return suma
 
 
-
 if __name__ == '__main__':
     mat_M = np.random.randint(100, size=(M, N))
     vector_A = np.random.randint(100, size=(N, ))
@@ -23,13 +23,10 @@ if __name__ == '__main__':
     processes = list()
     inicio = time.perf_counter()
 
-    for vector in mat_M:
-        p = Process(target=mult_vector, args=(vector, vector_A))
-        processes.append(p)
-        p.start()
+    args = zip(mat_M, repeat(vector_A))
 
-    for p in processes:
-        p.join()
+    with Pool(processes=cpu_count()) as p:
+        resultado = p.starmap(mult_vector, args)
 
     fin = time.perf_counter()
 
